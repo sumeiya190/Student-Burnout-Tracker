@@ -1,0 +1,21 @@
+/* styles/components/Button.css */
+.custom-button {
+  background-color: #333;
+  color: white;
+  padding: 12px 22px; /* increased by 2px */
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.custom-button:hover {
+  background-color: #1a1a1a; /* slightly darker on hover */
+}
+
+.custom-button:disabled {
+  background-color: #cccccc;
+  color: #666;
+  cursor: not-allowed;
+}

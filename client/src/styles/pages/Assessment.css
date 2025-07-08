@@ -1,0 +1,80 @@
+/* Full-screen layout */
+.assessment-wrapper {
+  height: 100vh;
+  width: 100vw;
+  overflow-y: auto;
+  background-color: #f7f9fc;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Stretch form to fill screen */
+.assessment-form {
+  flex: 1;
+  background-color: white;
+  padding: 2rem;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+/* Header with Exit button and title */
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+/* Exit button inside form */
+.exit-button {
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+/* Each question block */
+.form-group {
+  margin-bottom: 2rem;
+}
+
+/* Radio buttons styling */
+.radio-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.radio-group label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Submit button bottom-left */
+.submit-button-bottom-left {
+  margin-top: 2rem;
+}
+
+/* Message styling */
+.error-message {
+  color: red;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+.success-message {
+  color: green;
+  font-weight: bold;
+  margin-top: 1rem;
+}

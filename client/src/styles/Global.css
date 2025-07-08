@@ -1,0 +1,8 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Helvetica Neue', sans-serif;
+  background-color: white; /* Calm white background */
+  height: 100%;
+}

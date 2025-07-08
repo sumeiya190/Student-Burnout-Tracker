@@ -1,0 +1,130 @@
+/* Outer background (gray) */
+.alert-wrapper {
+  background-color: #e5e7eb;
+  min-height: 100vh;
+  width: 100%;
+  padding: 1rem; /* Reduced padding */
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+/* Inner white scrollable box aligned to the left */
+.alert-box {
+  background-color: white;
+  width: 100%;
+  max-width: 100%; /* Full width */
+  max-height: calc(100vh - 2rem); /* Enables vertical scrolling */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow-y: auto;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  position: relative;
+  margin: 0; /* No horizontal centering */
+}
+
+/* Exit button inside white box */
+.exit-button {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  z-index: 10;
+}
+
+.exit-button:hover {
+  background-color: #1a1a1a;
+}
+
+/* Alert content */
+.alert-container {
+  width: 100%;
+  font-family: Arial, sans-serif;
+}
+
+/* Title styling */
+.alert-title {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #b91c1c;
+  margin-bottom: 1.5rem;
+}
+
+/* Table wrapper with scroll */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+/* Full width table */
+.alert-table-full {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #e5e7eb;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+  overflow: hidden;
+  color: black;
+}
+
+.alert-table-full th,
+.alert-table-full td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #d1d5db;
+  text-align: left;
+}
+
+.alert-table-full th {
+  background-color: #d1d5db;
+  font-size: 15px;
+}
+
+.alert-table-full td {
+  font-size: 14px;
+}
+
+.student-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.student-info .email {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+/* Alert messages */
+.no-alerts,
+.alert-error {
+  font-size: 16px;
+  color: #444;
+  padding-top: 1rem;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .alert-table-full th,
+  .alert-table-full td {
+    padding: 10px 8px;
+    font-size: 13px;
+  }
+
+  .exit-button {
+    top: 10px;
+    right: 15px;
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .alert-box {
+    padding: 1rem;
+    max-height: calc(100vh - 2rem); /* Also apply on small screens */
+  }
+}
