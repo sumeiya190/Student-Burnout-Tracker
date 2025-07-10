@@ -21,7 +21,7 @@ const LandingPage = () => {
             workload, sleep, and emotional well-being.
           </p>
           <p className="bold">You don’t have to burn out to succeed.</p>
-          <p>Let’s build healthier student habits — one day at a time.</p>
+          <p>Let’s track our mental health — one day at a time.</p>
           <Button onClick={() => navigate('/login')}>Log In</Button>
         </div>
         <div className="landing-image">
