@@ -163,7 +163,7 @@ const StudentDashboard = () => {
                     <ul>
                       {validAssessments.map((a, index) => (
                         <li key={index}>
-                          <strong>Date:</strong> {new Date(a.submitted_at).toLocaleDateString()} —{' '}
+                          <strong>Date:</strong> {new Date(a.submitted_at).toLocaleString()} —{' '}
                           <strong>Score:</strong> {a.total_score}
                         </li>
                       ))}

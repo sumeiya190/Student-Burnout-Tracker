@@ -1,5 +1,11 @@
 import re
 
+def is_valid_email(email):
+    # Only allows full emails like name@example.com
+    pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$'
+    return re.fullmatch(pattern, email) is not None
+
+
 # Check password strength
 def is_strong_password(password):
     return (
@@ -23,8 +29,10 @@ def validate_user_data(data, existing_user=None):
     # Validate email
     if 'email' in data:
         email = data['email'].strip()
-        if '@' not in email or '.' not in email:
-            errors['email'] = "Invalid email format."
+        email_pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$'
+    if not re.fullmatch(email_pattern, email):
+        errors['email'] = "Invalid email format. Please use a full email like name@example.com."
+
 
     # Validate password (only if it's given)
     if 'password' in data and data['password']:

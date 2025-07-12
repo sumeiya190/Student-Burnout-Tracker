@@ -5,7 +5,7 @@ from models.TokenBlocklist import TokenBlocklist
 from db.Burnout_Tracker import db
 from utils.auth_utils import role_required
 from utils.jwt_blocklist import jwt_blocklist
-from utils.validators import is_strong_password  
+from utils.validators import is_strong_password, is_valid_email 
 
 auth_bp = Blueprint('auth_bp', __name__)
 
@@ -25,13 +25,12 @@ def signup():
     password = data.get('password')
     role = data.get('role', 'staff').lower()
 
-    if not username or not email or not password:
-        return jsonify({"error": "Username, email, and password are required."}), 400
+    errors = validate_user_data(data)
 
-    if not is_strong_password(password):
-        return jsonify({
-            "error": "Password must be at least 8 characters long and include an uppercase letter, lowercase letter, number, and special character."
-        }), 400
+    if errors:
+        return jsonify({"errors": errors}), 400
+
+
 
     # Check if user already exists
     existing_user = User.query.filter(

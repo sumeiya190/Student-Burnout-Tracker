@@ -33,9 +33,16 @@ const Signup = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || 'Signup failed');
-        return;
+        // 👇 This only runs when signup fails
+        if (data.errors) {
+          const firstError = Object.values(data.errors)[0]; // Get first validation error
+          setError(firstError);
+        } else {
+          setError(data.error || 'Signup failed');
+        }
+        return; // ⛔ Stop here — don’t navigate to login!
       }
+      
 
       navigate('/login');
     } catch (err) {
@@ -64,6 +71,8 @@ const Signup = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$"
+            title="Please enter a valid email address (e.g. user@example.com)"
           />
           <input
             type="password"
