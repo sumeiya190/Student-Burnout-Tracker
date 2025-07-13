@@ -237,6 +237,7 @@ def get_notifications():
             Evaluation.query
             .filter_by(user_id=user_id)
             .filter(Evaluation.meeting_place.isnot(None))
+            .filter(Evaluation.handled_by_admin_id.is_(None))
             .order_by(Evaluation.submitted_at.desc())
             .first()
         )

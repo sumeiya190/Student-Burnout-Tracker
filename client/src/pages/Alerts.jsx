@@ -25,7 +25,6 @@ const Alert = () => {
         if (!res.ok) throw new Error("Failed to fetch evaluations.");
         const allEvaluations = await res.json();
 
-        // ✅ Corrected: using e.handled_by instead of e.handled_by_admin_id
         const unhandledAlerts = allEvaluations.filter(
           (e) => e.needs_support && !e.handled_by
         );
@@ -48,7 +47,6 @@ const Alert = () => {
 
   const handleScheduleMeeting = async (evaluationId) => {
     try {
-      // Step 1: Send meeting details
       const res = await fetch(
         `http://127.0.0.1:5000/api/evaluations/${evaluationId}/set-meeting`,
         {
@@ -66,26 +64,7 @@ const Alert = () => {
         throw new Error(error.error || "Failed to schedule meeting.");
       }
 
-      // Step 2: Mark evaluation as handled
-      const handleRes = await fetch(
-        `http://127.0.0.1:5000/api/evaluations/${evaluationId}/handle`,
-        {
-          method: "PATCH",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      const result = await handleRes.json();
-
-      if (!handleRes.ok) {
-        throw new Error(result.error || "Failed to mark as handled.");
-      }
-
-      // Step 3: Ask admin if they want to send a notification
       const shouldNotify = window.confirm("Meeting scheduled. Send a notification to the student?");
-
       if (shouldNotify) {
         const notifRes = await fetch("http://127.0.0.1:5000/api/notifications", {
           method: "POST",
@@ -107,8 +86,23 @@ const Alert = () => {
         alert("Notification sent successfully.");
       }
 
-      alert(result.message || "Meeting scheduled and alert handled.");
-      setAlerts((prev) => prev.filter((e) => e.id !== evaluationId));
+      // Update that evaluation with the new meeting info
+      setAlerts((prev) =>
+        prev.map((e) =>
+          e.id === evaluationId
+            ? {
+                ...e,
+                meeting: {
+                  place: meetingData.place,
+                  time: meetingData.time,
+                  day: meetingData.day,
+                  date: meetingData.date,
+                },
+              }
+            : e
+        )
+      );
+
       setShowMeetingForm(null);
       setMeetingData({});
     } catch (err) {
@@ -181,7 +175,9 @@ const Alert = () => {
                       <td>{alert.total_score}</td>
                       <td>{new Date(alert.submitted_at).toLocaleString()}</td>
                       <td>
-                        {showMeetingForm === alert.id ? (
+                        {alert.meeting ? (
+                          <div className="meeting-set-label">Meeting already set</div>
+                        ) : showMeetingForm === alert.id ? (
                           <div className="meeting-form">
                             <input
                               type="text"
@@ -230,12 +226,19 @@ const Alert = () => {
                         )}
                       </td>
                       <td>
-                        {showMeetingForm !== alert.id && (
+                        {alert.meeting ? (
                           <Button
                             onClick={() => handleMarkAsHandled(alert.id)}
                             className="bg-green-600 hover:bg-green-700 text-white"
                           >
                             Mark as Handled
+                          </Button>
+                        ) : (
+                          <Button
+                            disabled
+                            className="bg-gray-400 text-white cursor-not-allowed"
+                          >
+                            Set meeting first
                           </Button>
                         )}
                       </td>

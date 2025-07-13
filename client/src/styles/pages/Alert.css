@@ -128,3 +128,49 @@
     max-height: calc(100vh - 2rem); /* Also apply on small screens */
   }
 }
+
+.meeting-set-label {
+  background-color: #e2e8f0;
+  color: #4a5568;
+  padding: 6px 10px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.meeting-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: #f9fafb;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  max-width: 220px;
+}
+
+.meeting-form input {
+  padding: 6px 10px;
+  border: 1px solid #cbd5e0;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+}
+
+.meeting-form input:focus {
+  outline: none;
+  border-color: #3b82f6; /* Tailwind blue-500 */
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.meeting-set-label {
+  background-color: #ecfccb; /* Light green */
+  color: #365314; /* Darker green text */
+  font-size: 14px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: 500;
+  border: 1px solid #a3e635;
+}
+

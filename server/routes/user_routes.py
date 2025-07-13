@@ -5,7 +5,8 @@ from models.TokenBlocklist import TokenBlocklist
 from db.Burnout_Tracker import db
 from utils.auth_utils import role_required
 from utils.jwt_blocklist import jwt_blocklist
-from utils.validators import is_strong_password, is_valid_email 
+from utils.validators import is_strong_password, is_valid_email
+from utils.validators import validate_user_data
 
 auth_bp = Blueprint('auth_bp', __name__)
 

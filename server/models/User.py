@@ -1,3 +1,4 @@
+# models/User.py
 from db.Burnout_Tracker import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
@@ -13,10 +14,19 @@ class User(db.Model):
     is_active = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    
+
+    # ✅ Relationship for cascade delete
+    evaluations = db.relationship(
+        'Evaluation',
+        backref='student',
+        cascade='all, delete',
+        passive_deletes=True,
+        foreign_keys='Evaluation.user_id'
+    )
+
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
-    
+
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
@@ -26,11 +36,11 @@ class User(db.Model):
     def is_staff(self):
         return self.role.lower() == 'student'
 
-    def __repr__(self):
-        return f"<User {self.username} - Role: {self.role}>"
-    
     def set_email(self, email):
         self.email = email.lower()
+
+    def __repr__(self):
+        return f"<User {self.username} - Role: {self.role}>"
 
     def to_dict(self):
         return {

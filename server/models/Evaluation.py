@@ -6,7 +6,7 @@ class Evaluation(db.Model):
     __tablename__ = 'evaluations'
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
     submitted_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     q1 = db.Column(db.Integer, nullable=False)
@@ -26,13 +26,13 @@ class Evaluation(db.Model):
     handled_by_admin_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
     handled_at = db.Column(db.DateTime, nullable=True)
 
-    # ✅ New meeting-related fields (nullable)
     meeting_place = db.Column(db.String(120), nullable=True)
-    meeting_time = db.Column(db.String(20), nullable=True)  # e.g., "14:00"
-    meeting_day = db.Column(db.String(20), nullable=True)   # e.g., "Monday"
-    meeting_date = db.Column(db.String(20), nullable=True)  # e.g., "2025-07-07"
+    meeting_time = db.Column(db.String(20), nullable=True)
+    meeting_day = db.Column(db.String(20), nullable=True)
+    meeting_date = db.Column(db.String(20), nullable=True)
 
-    user = db.relationship('User', foreign_keys=[user_id], backref='evaluations')
+    # ✅ Relationships
+    user = db.relationship('User', foreign_keys=[user_id])
     handled_by_admin = db.relationship('User', foreign_keys=[handled_by_admin_id])
 
     def calculate_total_score(self):
@@ -72,7 +72,6 @@ class Evaluation(db.Model):
                 "email": self.handled_by_admin.email
             } if self.handled_by_admin else None,
             "handled_at": self.handled_at.isoformat() if self.handled_at else None,
-            # ✅ Include meeting info
             "meeting": {
                 "place": self.meeting_place,
                 "time": self.meeting_time,
